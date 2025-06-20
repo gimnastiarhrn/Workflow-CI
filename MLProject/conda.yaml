@@ -1,4 +1,4 @@
-name: laptop-price-env
+name: ml-env
 channels:
   - defaults
   - conda-forge
@@ -7,8 +7,8 @@ dependencies:
   - scikit-learn
   - pandas
   - numpy
-  - mlflow=2.19.0
   - pip
   - pip:
+      - mlflow=2.19.0
       - joblib
       - dagshub
