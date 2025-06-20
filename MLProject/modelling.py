@@ -1,17 +1,29 @@
 import os
+import argparse
 import pandas as pd
 import mlflow
 import mlflow.sklearn
-from sklearn.linear_model import LinearRegression
 import joblib
+from sklearn.linear_model import LinearRegression
 import dagshub
 
-# Ambil kredensial dari environment (diatur dari GitHub Actions secrets)
-username = os.environ.get("MLFLOW_TRACKING_USERNAME")
-password = os.environ.get("MLFLOW_TRACKING_PASSWORD")
+# ======================
+# Argumen dari CLI
+# ======================
+parser = argparse.ArgumentParser()
+parser.add_argument("--data_dir", type=str, default="processed", help="Path ke folder dataset")
+args = parser.parse_args()
+
+# ======================
+# Ambil kredensial dari ENV (GitHub Actions Secrets)
+# ======================
+username = os.environ["MLFLOW_TRACKING_USERNAME"]
+password = os.environ["MLFLOW_TRACKING_PASSWORD"]
 uri = "https://dagshub.com/gimnastiarhrn/Membangun_Model.mlflow"
 
-# Konfigurasi koneksi ke DagsHub
+# ======================
+# Inisialisasi DagsHub Tracking
+# ======================
 os.environ["MLFLOW_TRACKING_URI"] = uri
 os.environ["MLFLOW_TRACKING_USERNAME"] = username
 os.environ["MLFLOW_TRACKING_PASSWORD"] = password
@@ -23,32 +35,28 @@ dagshub.init(
 )
 
 mlflow.set_tracking_uri(uri)
-
 mlflow.set_experiment("DagsHub - Tuned Laptop Price Prediction")
 
-# =======================
-# Load dataset siap latih
-# =======================
-X_train = pd.read_csv("processed/X_train.csv")
-X_test = pd.read_csv("processed/X_test.csv")
-y_train = pd.read_csv("processed/y_train.csv")
-y_test = pd.read_csv("processed/y_test.csv")
+# ======================
+# Load Dataset
+# ======================
+X_train = pd.read_csv(os.path.join(args.data_dir, "X_train.csv"))
+X_test = pd.read_csv(os.path.join(args.data_dir, "X_test.csv"))
+y_train = pd.read_csv(os.path.join(args.data_dir, "y_train.csv"))
+y_test = pd.read_csv(os.path.join(args.data_dir, "y_test.csv"))
 
-# =============
-# Autolog Mode
-# =============
+# ======================
+# Autolog & Training
+# ======================
 mlflow.sklearn.autolog()
 
-# ===================
-# Training dan Logging
-# ===================
 with mlflow.start_run():
     model = LinearRegression()
     model.fit(X_train, y_train.values.ravel())
 
     y_pred = model.predict(X_test)
 
-    # Simpan model ke file .pkl
+    # Simpan model ke file
     os.makedirs("model", exist_ok=True)
     joblib.dump(model, "model/model.pkl")
 
