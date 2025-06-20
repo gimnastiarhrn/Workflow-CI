@@ -10,18 +10,19 @@ from sklearn.metrics import mean_absolute_error, mean_squared_error, r2_score
 
 import dagshub
 
-# Simpan token di environment variable
-os.environ["MLFLOW_TRACKING_URI"] = "https://dagshub.com/gimnastiarhrn/Membangun_Model.mlflow"
-os.environ['MLFLOW_TRACKING_USERNAME'] = 'gimnastiarhrn'
-os.environ['MLFLOW_TRACKING_PASSWORD'] = os.getenv("DAGSHUB_TOKEN")  # ✅ gunakan secret
-
-dagshub.init(repo_owner='gimnastiarhrn',
-             repo_name='Membangun_Model',
-             mlflow=True)
-
-import mlflow
-import mlflow.sklearn
+# Ambil credential dari environment
 mlflow.set_tracking_uri(os.environ["MLFLOW_TRACKING_URI"])
+
+# Inisialisasi dagshub dengan tracking yang aktif
+# Username dan token diatur di environment oleh GitHub Actions
+# melalui secrets
+
+dagshub.init(
+    repo_owner="gimnastiarhrn",
+    repo_name="Membangun_Model",
+    mlflow=True
+)
+
 mlflow.set_experiment("DagsHub - Tuned Laptop Price Prediction")
 
 
