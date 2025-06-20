@@ -4,8 +4,9 @@ conda_env: conda.yaml
 
 entry_points:
   main:
-    command: >
-      python modelling.py
+    parameters:
+      data_dir: {type: str, default: "processed"}
+    command: "python modelling.py --data_dir {data_dir}"
 
   tuning:
     command: >
