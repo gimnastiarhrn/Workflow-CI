@@ -25,6 +25,8 @@ jobs:
 
       - name: 🚀 Activate Conda and Run MLflow Project
         shell: bash -l {0}
+        env:
+          DAGSHUB_TOKEN: ${{ secrets.DAGSHUB_TOKEN }}
         run: |
           conda activate ml-env
           cd MLProject
