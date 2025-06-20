@@ -13,11 +13,12 @@ import dagshub
 # Simpan token di environment variable
 os.environ["MLFLOW_TRACKING_URI"] = "https://dagshub.com/gimnastiarhrn/Membangun_Model.mlflow"
 os.environ['MLFLOW_TRACKING_USERNAME'] = 'gimnastiarhrn'
-os.environ['MLFLOW_TRACKING_PASSWORD'] = '685ca98a3cd5b6ed208e7c7c361ad1f40590ff66'
+os.environ['MLFLOW_TRACKING_PASSWORD'] = os.getenv("DAGSHUB_TOKEN")  # ✅ gunakan secret
 
 dagshub.init(repo_owner='gimnastiarhrn',
              repo_name='Membangun_Model',
-             mlflow=True)
+             mlflow=True,
+             token=os.environ["DAGSHUB_TOKEN"])
 
 import mlflow
 import mlflow.sklearn
