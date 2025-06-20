@@ -31,7 +31,8 @@ os.environ["MLFLOW_TRACKING_PASSWORD"] = password
 dagshub.init(
     repo_owner="gimnastiarhrn",
     repo_name="Membangun_Model",
-    mlflow=True
+    mlflow=True,
+    token=os.environ["MLFLOW_TRACKING_PASSWORD"]
 )
 
 mlflow.set_tracking_uri(uri)
