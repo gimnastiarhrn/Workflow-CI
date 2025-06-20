@@ -28,7 +28,7 @@ jobs:
         env:
           MLFLOW_TRACKING_URI: https://dagshub.com/gimnastiarhrn/Membangun_Model.mlflow
           MLFLOW_TRACKING_USERNAME: ${{ secrets.MLFLOW_TRACKING_USERNAME }}
-          MLFLOW_TRACKING_PASSWORD: ${{ secrets.DAGSHUB_TOKEN }}
+          MLFLOW_TRACKING_PASSWORD: ${{ secrets.MLFLOW_TRACKING_PASSWORD }}
         run: |
           conda activate ml-env
           cd MLProject
