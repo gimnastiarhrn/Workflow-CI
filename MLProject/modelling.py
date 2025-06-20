@@ -5,7 +5,6 @@ import mlflow
 import mlflow.sklearn
 import joblib
 from sklearn.linear_model import LinearRegression
-import dagshub
 
 # ======================
 # Argumen dari CLI
@@ -17,23 +16,10 @@ args = parser.parse_args()
 # ======================
 # Ambil kredensial dari ENV (GitHub Actions Secrets)
 # ======================
-username = os.environ["MLFLOW_TRACKING_USERNAME"]
-password = os.environ["MLFLOW_TRACKING_PASSWORD"]
 uri = "https://dagshub.com/gimnastiarhrn/Membangun_Model.mlflow"
-
-# ======================
-# Inisialisasi DagsHub Tracking
-# ======================
-os.environ["MLFLOW_TRACKING_URI"] = uri
-os.environ["MLFLOW_TRACKING_USERNAME"] = username
-os.environ["MLFLOW_TRACKING_PASSWORD"] = password
-
-dagshub.init(
-    repo_owner="gimnastiarhrn",
-    repo_name="Membangun_Model",
-    mlflow=True,
-    token=os.environ["MLFLOW_TRACKING_PASSWORD"]
-)
+os.environ["MLFLOW_TRACKING_URI"] = uri  # Untuk mlflow run
+os.environ["MLFLOW_TRACKING_USERNAME"] = os.environ["MLFLOW_TRACKING_USERNAME"]
+os.environ["MLFLOW_TRACKING_PASSWORD"] = os.environ["MLFLOW_TRACKING_PASSWORD"]
 
 mlflow.set_tracking_uri(uri)
 mlflow.set_experiment("DagsHub - Tuned Laptop Price Prediction")
