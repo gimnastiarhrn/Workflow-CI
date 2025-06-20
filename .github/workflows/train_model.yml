@@ -23,7 +23,7 @@ jobs:
           auto-activate-base: false
           use-only-tar-bz2: true
 
-      - name: 🚀 Activate Conda and Run MLflow Project
+      - name: 🚀 Run MLflow Project (tanpa env baru)
         shell: bash -l {0}
         env:
           MLFLOW_TRACKING_URI: https://dagshub.com/gimnastiarhrn/Membangun_Model.mlflow
@@ -32,7 +32,8 @@ jobs:
         run: |
           conda activate ml-env
           cd MLProject
-          mlflow run . --env-manager=local
+          echo "👉 Menjalankan MLflow tanpa conda env baru..."
+          mlflow run . --env-manager=local -P data_dir=processed
 
       - name: 📦 Upload Trained Model Artifact
         uses: actions/upload-artifact@v4
