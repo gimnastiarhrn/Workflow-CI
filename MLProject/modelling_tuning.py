@@ -17,8 +17,7 @@ os.environ['MLFLOW_TRACKING_PASSWORD'] = os.getenv("DAGSHUB_TOKEN")  # ✅ gunak
 
 dagshub.init(repo_owner='gimnastiarhrn',
              repo_name='Membangun_Model',
-             mlflow=True,
-             token=os.environ["DAGSHUB_TOKEN"])
+             mlflow=True)
 
 import mlflow
 import mlflow.sklearn
