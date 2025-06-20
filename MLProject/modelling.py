@@ -14,15 +14,14 @@ parser.add_argument("--data_dir", type=str, default="processed", help="Path ke f
 args = parser.parse_args()
 
 # ======================
-# Ambil kredensial dari ENV (GitHub Actions Secrets)
+# Set tracking URI dan credential
 # ======================
 uri = "https://dagshub.com/gimnastiarhrn/Membangun_Model.mlflow"
-os.environ["MLFLOW_TRACKING_URI"] = uri  # Untuk mlflow run
+os.environ["MLFLOW_TRACKING_URI"] = uri
 os.environ["MLFLOW_TRACKING_USERNAME"] = os.environ["MLFLOW_TRACKING_USERNAME"]
 os.environ["MLFLOW_TRACKING_PASSWORD"] = os.environ["MLFLOW_TRACKING_PASSWORD"]
 
 mlflow.set_tracking_uri(uri)
-mlflow.set_experiment("DagsHub - Tuned Laptop Price Prediction")
 
 # ======================
 # Load Dataset
