@@ -1,0 +1,38 @@
+name: Train Model CI
+
+on:
+  push:
+    paths:
+      - 'MLProject/**'
+      - '.github/workflows/train_model.yml'
+  workflow_dispatch:
+
+jobs:
+  train:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up Conda
+        uses: conda-incubator/setup-miniconda@v2
+        with:
+          activate-environment: ml-env
+          environment-file: MLProject/conda.yaml
+          auto-activate-base: false
+
+      - name: Install MLflow
+        run: |
+          conda install -y -c conda-forge mlflow
+
+      - name: Run MLflow Project
+        run: |
+          cd MLProject
+          mlflow run . --no-conda
+
+      - name: Upload model artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: trained-model
+          path: MLProject/model/model.pkl
