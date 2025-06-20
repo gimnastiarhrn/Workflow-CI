@@ -12,26 +12,25 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repository
+      - name: 📥 Checkout Repository
         uses: actions/checkout@v3
 
-      - name: Set up Conda
+      - name: 🧪 Set Up Miniconda
         uses: conda-incubator/setup-miniconda@v2
         with:
           activate-environment: ml-env
           environment-file: MLProject/conda.yaml
           auto-activate-base: false
+          use-only-tar-bz2: true
 
-      - name: Install MLflow
+      - name: 🚀 Activate Conda and Run MLflow Project
+        shell: bash -l {0}
         run: |
-          conda install -y -c conda-forge mlflow
-
-      - name: Run MLflow Project
-        run: |
+          conda activate ml-env
           cd MLProject
           mlflow run . --no-conda
 
-      - name: Upload model artifact
+      - name: 📦 Upload Trained Model Artifact
         uses: actions/upload-artifact@v4
         with:
           name: trained-model
