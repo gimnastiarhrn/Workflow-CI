@@ -5,19 +5,19 @@ from sklearn.linear_model import LinearRegression
 import joblib
 import os
 
-#import dagshub
+import dagshub
 
 # Ambil token dari environment
-#os.environ["MLFLOW_TRACKING_URI"] = "https://dagshub.com/gimnastiarhrn/Membangun_Model.mlflow"
-#os.environ['MLFLOW_TRACKING_USERNAME'] = 'gimnastiarhrn'
-#os.environ['MLFLOW_TRACKING_PASSWORD'] = os.getenv("DAGSHUB_TOKEN")  # ✅ gunakan secret
+os.environ["MLFLOW_TRACKING_URI"] = "https://dagshub.com/gimnastiarhrn/Membangun_Model.mlflow"
+os.environ['MLFLOW_TRACKING_USERNAME'] = 'gimnastiarhrn'
+os.environ['MLFLOW_TRACKING_PASSWORD'] = os.getenv("DAGSHUB_TOKEN")  # ✅ gunakan secret
 
-#dagshub.init(repo_owner='gimnastiarhrn',
-#             repo_name='Membangun_Model',
-#             mlflow=True)
+dagshub.init(repo_owner='gimnastiarhrn',
+             repo_name='Membangun_Model',
+             mlflow=True)
 
-#mlflow.set_tracking_uri(os.environ["MLFLOW_TRACKING_URI"])
-#mlflow.set_experiment("DagsHub - Tuned Laptop Price Prediction")
+mlflow.set_tracking_uri(os.environ["MLFLOW_TRACKING_URI"])
+mlflow.set_experiment("DagsHub - Tuned Laptop Price Prediction")
 
 # =======================
 # Load dataset siap latih
