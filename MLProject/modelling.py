@@ -9,8 +9,8 @@ import dagshub
 
 # Ambil token dari environment
 os.environ["MLFLOW_TRACKING_URI"] = "https://dagshub.com/gimnastiarhrn/Membangun_Model.mlflow"
-os.environ['MLFLOW_TRACKING_USERNAME'] = 'gimnastiarhrn'
-os.environ['MLFLOW_TRACKING_PASSWORD'] = os.getenv("DAGSHUB_TOKEN")  # ✅ gunakan secret
+os.environ['MLFLOW_TRACKING_USERNAME'] = ${{ secrets.MLFLOW_TRACKING_USERNAME }}
+os.environ['MLFLOW_TRACKING_PASSWORD'] = ${{ secrets.DAGSHUB_TOKEN }}  # ✅ gunakan secret
 
 dagshub.init(repo_owner='gimnastiarhrn',
              repo_name='Membangun_Model',
