@@ -1,5 +1,3 @@
-# modelling.py
-
 import pandas as pd
 import mlflow
 import mlflow.sklearn
@@ -9,10 +7,10 @@ import os
 
 import dagshub
 
-# Simpan token di environment variable
+# Ambil token dari environment
 os.environ["MLFLOW_TRACKING_URI"] = "https://dagshub.com/gimnastiarhrn/Membangun_Model.mlflow"
 os.environ['MLFLOW_TRACKING_USERNAME'] = 'gimnastiarhrn'
-os.environ['MLFLOW_TRACKING_PASSWORD'] = '685ca98a3cd5b6ed208e7c7c361ad1f40590ff66'
+os.environ['MLFLOW_TRACKING_PASSWORD'] = os.getenv("DAGSHUB_TOKEN")  # ✅ gunakan secret
 
 dagshub.init(repo_owner='gimnastiarhrn',
              repo_name='Membangun_Model',
@@ -29,15 +27,9 @@ X_test = pd.read_csv("processed/X_test.csv")
 y_train = pd.read_csv("processed/y_train.csv")
 y_test = pd.read_csv("processed/y_test.csv")
 
-# =====================
-# Setup MLflow Tracking
-# =====================
-#mlflow.set_tracking_uri("http://127.0.0.1:5000")  # Ubah ke DagsHub URL jika sudah
-#mlflow.set_experiment("Baseline Laptop Price Prediction")
-
-# ============
+# =============
 # Autolog Mode
-# ============
+# =============
 mlflow.sklearn.autolog()
 
 # ===================
@@ -50,7 +42,6 @@ with mlflow.start_run():
 
     y_pred = model.predict(X_test)
 
-    # Simpan model ke file .pkl
     os.makedirs("model", exist_ok=True)
     joblib.dump(model, "model/model.pkl")
 
