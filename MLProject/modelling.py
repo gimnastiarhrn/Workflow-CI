@@ -1,22 +1,24 @@
+import os
 import pandas as pd
 import mlflow
 import mlflow.sklearn
 from sklearn.linear_model import LinearRegression
 import joblib
-import os
-
 import dagshub
 
-# Ambil token dari environment
-os.environ["MLFLOW_TRACKING_URI"] = "https://dagshub.com/gimnastiarhrn/Membangun_Model.mlflow"
-os.environ['MLFLOW_TRACKING_USERNAME'] = ${{ secrets.MLFLOW_TRACKING_USERNAME }}
-os.environ['MLFLOW_TRACKING_PASSWORD'] = ${{ secrets.DAGSHUB_TOKEN }}  # ✅ gunakan secret
-
-dagshub.init(repo_owner='gimnastiarhrn',
-             repo_name='Membangun_Model',
-             mlflow=True)
-
+# Ambil credential dari environment
 mlflow.set_tracking_uri(os.environ["MLFLOW_TRACKING_URI"])
+
+# Inisialisasi dagshub dengan tracking yang aktif
+# Username dan token diatur di environment oleh GitHub Actions
+# melalui secrets
+
+dagshub.init(
+    repo_owner="gimnastiarhrn",
+    repo_name="Membangun_Model",
+    mlflow=True
+)
+
 mlflow.set_experiment("DagsHub - Tuned Laptop Price Prediction")
 
 # =======================
@@ -36,12 +38,12 @@ mlflow.sklearn.autolog()
 # Training dan Logging
 # ===================
 with mlflow.start_run():
-
     model = LinearRegression()
     model.fit(X_train, y_train.values.ravel())
 
     y_pred = model.predict(X_test)
 
+    # Simpan model ke file .pkl
     os.makedirs("model", exist_ok=True)
     joblib.dump(model, "model/model.pkl")
 
