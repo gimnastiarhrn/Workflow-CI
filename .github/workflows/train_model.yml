@@ -28,7 +28,7 @@ jobs:
         run: |
           conda activate ml-env
           cd MLProject
-          mlflow run . --no-conda
+          mlflow run .
 
       - name: 📦 Upload Trained Model Artifact
         uses: actions/upload-artifact@v4
